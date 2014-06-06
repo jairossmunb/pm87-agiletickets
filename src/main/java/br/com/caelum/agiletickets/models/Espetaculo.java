@@ -104,20 +104,26 @@ public class Espetaculo {
 
 		int dias = Days.daysBetween(inicio, fim).getDays();
 		int index = 0;
-
+		LocalDate novaData = inicio;
+		
 		System.out.println("Dias = " + dias);
 		
 		do {
 			if (dias < 0)
 				break;
-			
-			if (periodicidade == Periodicidade.SEMANAL) {
-				index += 7;
-			} else {
-				index++;
-			}
 
 			Sessao sessao = new Sessao();
+			sessao.setInicio(novaData.toDateTime(horario));
+			System.out.println("Nova Data = " + novaData.toString());
+
+			if (periodicidade == Periodicidade.SEMANAL) {
+				novaData = novaData.plusDays(7);
+				index += 7;
+			} else {
+				novaData = novaData.plusDays(1);
+				index++;
+			}
+			
 			arrayList.add(sessao);
 			
 		} while (index < dias);
